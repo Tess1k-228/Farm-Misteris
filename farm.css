@@ -1,0 +1,178 @@
+/* ============================================================
+   FARM MISTERIS — CSS v3 (Полная версия с сеткой)
+   ============================================================ */
+
+:root {
+  --bg-deep: #0a0f16;
+  --bg-mid: #1a2230;
+  --panel-bg-1: #303845;
+  --panel-bg-2: #222934;
+  --border-soft: #4a5566;
+  --text-main: #e8edf4;
+  --text-muted: #8a94a4;
+  --accent: #6b8ab8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 30% 20%, var(--bg-mid), var(--bg-deep) 70%);
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+  padding: 8px;
+  color: var(--text-main);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.game-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-title-large {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  color: #c8d4e4;
+}
+.game-title-large .accent { color: var(--accent); }
+
+/* Карточка игрока */
+.player-card, .section, .board-container {
+  width: 100%;
+  background: linear-gradient(145deg, var(--panel-bg-1), var(--panel-bg-2));
+  border: 2px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.player-row { display: flex; align-items: center; gap: 10px; }
+.player-avatar { font-size: 2rem; position: relative; }
+.player-avatar .level-badge {
+  position: absolute; bottom: -5px; right: -10px;
+  background: linear-gradient(145deg, #f7d44a, #d4a017);
+  color: #1a2029; font-size: 0.65rem; font-weight: 900;
+  padding: 2px 6px; border-radius: 8px; border: 1px solid #222934;
+}
+.player-info { flex: 1; }
+.player-name { font-weight: 800; font-size: 1rem; color: var(--text-main); }
+.xp-bar-wrap {
+  height: 8px; background: #0e1520; border-radius: 8px;
+  overflow: hidden; border: 1px solid var(--border-soft); margin-top: 6px; margin-bottom: 3px;
+}
+.xp-bar {
+  height: 100%; background: linear-gradient(90deg, #6b8ab8, #9cc4ff);
+  border-radius: 8px; transition: width 0.3s ease-out;
+}
+.xp-text { color: var(--text-muted); font-size: 0.65rem; font-weight: 600; }
+
+.currency-row { margin-top: 10px; display: flex; gap: 8px; }
+.curr-item { background: rgba(0,0,0,0.3); padding: 4px 12px; border-radius: 12px; border: 1px solid var(--border-soft); font-weight: 800; color: var(--text-main); }
+
+/* Главные вкладки */
+.tabs { display: flex; gap: 8px; width: 100%; margin-bottom: 12px; }
+.tab-btn {
+  flex: 1; padding: 10px; background: var(--panel-bg-2); border: 2px solid var(--border-soft);
+  border-radius: 12px; color: var(--text-muted); font-weight: 800; font-family: inherit; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s;
+}
+.tab-btn .tab-icon { font-size: 1.2rem; }
+.tab-btn.active { background: var(--panel-bg-1); color: var(--text-main); border-color: var(--accent); }
+
+.tab-content { width: 100%; display: none; }
+.tab-content.active { display: block; }
+
+/* Вкладки внутри фермы (Участок 1, 2...) */
+.farm-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.farm-tabs::-webkit-scrollbar { display: none; }
+
+.farm-tab-btn {
+  padding: 8px 16px;
+  background: var(--panel-bg-2);
+  border: 2px solid var(--border-soft);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.farm-tab-btn.active {
+  background: var(--panel-bg-1);
+  border-color: var(--accent);
+  color: var(--text-main);
+}
+
+/* Сетка фермы 5x5 */
+.farm-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.farm-cell {
+  aspect-ratio: 1 / 1;
+  background: #1e242e;
+  border: 2px solid #3a4456;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.2s;
+}
+.farm-cell:active { transform: scale(0.9); }
+.farm-cell.growing { border-color: #8a7a3a; }
+.farm-cell.ready { border-color: #5a7a66; animation: pulseReady 1.5s infinite; }
+
+@keyframes pulseReady {
+  0% { box-shadow: 0 0 0px #5a7a66; }
+  50% { box-shadow: 0 0 12px #5a7a66; }
+  100% { box-shadow: 0 0 0px #5a7a66; }
+}
+
+/* Магазин */
+.shop-grid { display: flex; flex-direction: column; gap: 8px; }
+.shop-item {
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; border: 1px solid var(--border-soft);
+}
+.shop-buy {
+  background: var(--accent); border: none; padding: 8px 12px; border-radius: 8px;
+  font-weight: 800; color: #fff; cursor: pointer; font-family: inherit;
+}
+.shop-buy:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Замки и вопросы в магазине */
+.shop-item.locked { opacity: 0.7; }
+.shop-item.mystery { 
+  justify-content: center; padding: 15px; 
+  background: rgba(0,0,0,0.4); border-style: dashed; 
+}
+.shop-item.mystery .mystery-text {
+  color: var(--text-muted); font-size: 1.2rem; font-weight: 900; letter-spacing: 3px;
+}
+
+/* Гайд */
+.guide-text { color: var(--text-main); font-size: 0.9rem; line-height: 1.6; }
+.guide-text p { margin-bottom: 12px; }
+.guide-text b { color: var(--accent); }
+
+.version-text { color: var(--text-muted); font-size: 0.7rem; margin-top: 20px; font-weight: 800; letter-spacing: 1px; }

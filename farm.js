@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  const CONFIG = { ROWS: 5, COLS: 5, MAX_FARMS: 6, STORAGE_KEY: 'farmMisteris_v4_save' };
+  const CONFIG = { ROWS: 5, COLS: 5, MAX_FARMS: 6, STORAGE_KEY: 'farmMisteris_v5_save' };
 
   const CROPS = {
     carrot: { name: 'Морковь', icon: '🥕', growTime: 60000, seedCost: 10, sellPrice: 25, unlockLevel: 1, xp: 5 },
@@ -39,7 +39,7 @@
       state.xpToNext = xpForLevel(state.level);
       leveledUp = true;
     }
-    if (leveledUp) setTimeout(() => alert(`🎉 Уровень ${state.level}!`), 100);
+    if (leveledUp) setTimeout(() => alert(`🎉 Уровень ${state.level}! Открыты новые семена!`), 100);
   }
 
   function saveGame() { state.lastSaveTime = Date.now(); localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state)); }
@@ -70,7 +70,7 @@
     if ($('xpText')) $('xpText').textContent = `${state.xp} / ${state.xpToNext} XP`;
     if ($('xpBar')) $('xpBar').style.width = Math.min(100, (state.xp / state.xpToNext) * 100) + '%';
     
-    renderFarmTabs(); renderFarm(); renderShop(); renderLandList();
+    renderFarmTabs(); renderFarm(); renderShop(); renderLandList(); renderGuide();
   }
 
   function renderFarmTabs() {
@@ -188,6 +188,38 @@
           });
         }
       }
+      list.appendChild(item);
+    }
+  }
+
+  // --- АВТОМАТИЧЕСКИЙ ГАЙД ---
+  function renderGuide() {
+    const list = $('guideCropsList');
+    if (!list) return;
+    list.innerHTML = '';
+
+    for (const [key, crop] of Object.entries(CROPS)) {
+      const item = document.createElement('div');
+      item.className = 'shop-item';
+      const timeInMins = crop.growTime / 60000;
+      const timeText = timeInMins >= 1 ? `${timeInMins} мин.` : `${crop.growTime / 1000} сек.`;
+      const profit = crop.sellPrice - crop.seedCost;
+      const isLocked = state.level < crop.unlockLevel;
+      if (isLocked) item.style.opacity = '0.6';
+
+      item.innerHTML = `
+        <div style="flex: 1;">
+          <div style="font-weight:800; color: ${isLocked ? 'var(--text-muted)' : 'var(--text-main)'};">
+            ${crop.icon} ${isLocked ? '???' : crop.name} 
+            <span style="font-size:0.65rem; color:var(--text-muted); font-weight:normal;">(Ур. ${crop.unlockLevel})</span>
+          </div>
+          <div style="font-size:0.7rem; color:var(--text-muted); margin-top:4px;">
+            ⏳ Рост: <b>${timeText}</b> | 
+            💰 Продажа: <b>${crop.sellPrice} 🪙</b> | 
+            📈 Прибыль: <b style="color:#5a7a66;">+${profit} 🪙</b>
+          </div>
+        </div>
+      `;
       list.appendChild(item);
     }
   }

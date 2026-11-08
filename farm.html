@@ -11,7 +11,6 @@
 <div class="game-wrapper">
   <div class="game-title-large">FARM <span class="accent">MISTERIS</span></div>
 
-  <!-- Карточка игрока -->
   <div class="player-card">
     <div class="player-row">
       <div class="player-avatar">🌾<div class="level-badge" id="levelBadge">1</div></div>
@@ -26,7 +25,6 @@
     </div>
   </div>
 
-  <!-- Вкладки -->
   <div class="tabs">
     <button class="tab-btn active" data-tab="field"><span class="tab-icon">🌱</span><span>Грядки</span></button>
     <button class="tab-btn" data-tab="shop"><span class="tab-icon">🛒</span><span>Семена</span></button>
@@ -34,16 +32,13 @@
     <button class="tab-btn" data-tab="guide"><span class="tab-icon">📖</span><span>Гайд</span></button>
   </div>
 
-  <!-- Вкладка Грядки -->
   <div class="tab-content active" id="tab-field">
     <div class="farm-tabs" id="farmTabs"></div>
     <div class="board-container">
-      <!-- ВОТ ЗДЕСЬ ЖИВЕТ СЕТКА 5х5 -->
       <div class="farm-grid" id="farmGrid"></div>
     </div>
   </div>
 
-  <!-- Вкладка Магазин семян -->
   <div class="tab-content" id="tab-shop">
     <div class="section">
       <div class="section-title">🛒 СЕМЕНА</div>
@@ -51,7 +46,6 @@
     </div>
   </div>
 
-  <!-- Вкладка Покупка Участков -->
   <div class="tab-content" id="tab-land">
     <div class="section">
       <div class="section-title">🗺️ РАСШИРЕНИЕ ФЕРМЫ</div>
@@ -59,18 +53,21 @@
     </div>
   </div>
 
-  <!-- Вкладка Гайд -->
   <div class="tab-content" id="tab-guide">
     <div class="section">
       <div class="section-title">📖 ГАЙДБУК</div>
       <div class="guide-text">
         <p>👋 <b>Добро пожаловать в Farm Misteris!</b></p>
-        <p>🌱 Выбирай семена и сажай их на грядки.</p>
+        <p>🌱 Выбирай семена, сажай на грядки и собирай урожай. Трать монеты на новые участки!</p>
+        <p>⏳ <b>Важно:</b> растения растут даже когда игра закрыта!</p>
       </div>
+      
+      <div class="section-title" style="margin-top: 20px;">🌾 СПРАВОЧНИК РАСТЕНИЙ</div>
+      <div id="guideCropsList" class="shop-grid"></div>
     </div>
   </div>
 
-  <div class="version-text">ВЕРСИЯ 0.3 — УРОВНИ</div>
+  <div class="version-text">ВЕРСИЯ 0.4 — ГАЙД</div>
 </div>
 
 <script src="farm.js"></script>
